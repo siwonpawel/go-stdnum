@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-var nipValidRegex = regexp.MustCompile("\\d{10}")
+var nipValidRegex = regexp.MustCompile("^\\d{10}$")
 var nipCleanseRegex = regexp.MustCompile("[^A-z0-9]|[\\\\\\[\\]`^]")
 var nipNumericalWeights = []int{6, 5, 7, 2, 3, 4, 5, 6, 7}
 

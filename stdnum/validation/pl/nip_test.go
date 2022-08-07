@@ -22,7 +22,7 @@ func Test_cleanse(t *testing.T) {
 			"  7008045141  ",
 			returnVals{
 				cleaned:  "7008045141",
-				warnings: []string{missingCountryPrefix},
+				warnings: []string{validation.MissingCountryPrefix},
 			},
 		},
 		{
@@ -30,7 +30,7 @@ func Test_cleanse(t *testing.T) {
 			"70 08 04 51 41",
 			returnVals{
 				cleaned:  "7008045141",
-				warnings: []string{missingCountryPrefix},
+				warnings: []string{validation.MissingCountryPrefix},
 			},
 		},
 		{
@@ -46,13 +46,13 @@ func Test_cleanse(t *testing.T) {
 			"70 08`~!@#$%^&*()+=,<./;'\\[]{}:¬∨¦¦|>\"|?>< 04 51 41",
 			returnVals{
 				cleaned:  "7008045141",
-				warnings: []string{missingCountryPrefix},
+				warnings: []string{validation.MissingCountryPrefix},
 			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got, warnings := cleanse(tt.number); got != tt.want.cleaned || !reflect.DeepEqual(warnings, tt.want.warnings) {
+			if got, warnings := validation.Cleanse(tt.number, country); got != tt.want.cleaned || !reflect.DeepEqual(warnings, tt.want.warnings) {
 				t.Errorf("cleanse() = [ %#v %#v ], want %#v", got, warnings, tt.want)
 			}
 		})
@@ -72,8 +72,8 @@ func TestValidate(t *testing.T) {
 			"",
 			rc.Fail(
 				"",
-				[]string{missingCountryPrefix},
-				invalidLength,
+				[]string{validation.MissingCountryPrefix},
+				validation.InvalidLength,
 				validation.DebugInfo{},
 			),
 		},
@@ -83,7 +83,7 @@ func TestValidate(t *testing.T) {
 			rc.Fail(
 				"PL1234567890",
 				[]string{},
-				invalidNumber,
+				validation.InvalidNumber,
 				validation.DebugInfo{
 					CleanedInput: "1234567890",
 				},

@@ -14,14 +14,14 @@ var peselNumericalWeights = []int{1, 3, 7, 9, 1, 3, 7, 9, 1, 3}
 var peselResultCreator = validation.NewResultCreator(country, peselIdentifierName)
 
 func ValidatePESEL(number string) *validation.Result {
-	cleanedNumber, warnings := cleanse(number)
+	cleanedNumber, warnings := validation.Cleanse(number, country)
 
 	debugInfo := validation.DebugInfo{
 		CleanedInput: cleanedNumber,
 	}
 
 	if !peselValidRegex.MatchString(cleanedNumber) {
-		return peselResultCreator.Fail(number, warnings, invalidLength, debugInfo)
+		return peselResultCreator.Fail(number, warnings, validation.InvalidLength, debugInfo)
 	}
 
 	isValid, err := validatePESEL(cleanedNumber)
@@ -32,13 +32,13 @@ func ValidatePESEL(number string) *validation.Result {
 	if isValid {
 		return peselResultCreator.Ok(number, warnings, debugInfo)
 	} else {
-		return peselResultCreator.Fail(number, warnings, invalidNumber, debugInfo)
+		return peselResultCreator.Fail(number, warnings, validation.InvalidNumber, debugInfo)
 	}
 }
 
 func validatePESEL(cleanedNumber string) (bool, error) {
 	if len(cleanedNumber) != 11 {
-		return false, errors.New(invalidLength)
+		return false, errors.New(validation.InvalidLength)
 	}
 
 	sum := 0

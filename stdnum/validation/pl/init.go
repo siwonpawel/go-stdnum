@@ -7,4 +7,5 @@ import (
 func init() {
 	validation.RegisterValidator(ValidateNIP, country, nipIdentifierName)
 	validation.RegisterValidator(ValidatePESEL, country, peselIdentifierName)
+	validation.RegisterValidator(ValidateREGON, country, regonIdentifierName)
 }

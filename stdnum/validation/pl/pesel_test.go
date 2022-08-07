@@ -114,12 +114,12 @@ func TestValidatePESEL(t *testing.T) {
 		{
 			"Should validate invalid PESEL",
 			args{number: "PL21022408493"},
-			rc.Fail("PL21022408493", []string{}, invalidNumber, validation.DebugInfo{CleanedInput: "21022408493"}),
+			rc.Fail("PL21022408493", []string{}, validation.InvalidNumber, validation.DebugInfo{CleanedInput: "21022408493"}),
 		},
 		{
 			"Should validate invalid PESEL with no country prefix",
 			args{number: "21022408493"},
-			rc.Fail("21022408493", []string{"Missing country identifier at beginning."}, invalidNumber, validation.DebugInfo{CleanedInput: "21022408493"}),
+			rc.Fail("21022408493", []string{"Missing country identifier at beginning."}, validation.InvalidNumber, validation.DebugInfo{CleanedInput: "21022408493"}),
 		},
 	}
 	for _, tt := range tests {

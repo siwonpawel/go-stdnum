@@ -103,8 +103,8 @@ func TestValidate(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := Validate(tt.number); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Validate(%#v) =\n\t %#v\nwant %#v", tt.number, got, tt.want)
+			if got := ValidateNIP(tt.number); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("ValidateNIP(%#v) =\n\t %#v\nwant %#v", tt.number, got, tt.want)
 			}
 		})
 	}
@@ -182,8 +182,8 @@ func TestValidate_correctRecords(t *testing.T) {
 	}
 	for i, tt := range tests {
 		t.Run(fmt.Sprintf("Should be valid %.2v", i), func(t *testing.T) {
-			if got, err := validate(tt.number); got != tt.want || err != nil {
-				t.Errorf("Validate(%#v) =\n%#v, %v want\n%#v, %v", tt.number, got, err, tt.want, err)
+			if got, err := validateNIP(tt.number); got != tt.want || err != nil {
+				t.Errorf("ValidateNIP(%#v) =\n%#v, %v want\n%#v, %v", tt.number, got, err, tt.want, err)
 			}
 		})
 	}

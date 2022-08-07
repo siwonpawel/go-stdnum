@@ -28,7 +28,7 @@ func cleanse(number string) (cleanedNumber string, warnings []string) {
 	}
 }
 
-func Validate(number string) *validation.Result {
+func ValidateNIP(number string) *validation.Result {
 	cleanedNumber, warnings := cleanse(number)
 
 	debugInfo := validation.DebugInfo{
@@ -39,7 +39,7 @@ func Validate(number string) *validation.Result {
 		return nipResultCreator.Fail(number, warnings, invalidLength, debugInfo)
 	}
 
-	isValid, err := validate(cleanedNumber)
+	isValid, err := validateNIP(cleanedNumber)
 	if err != nil {
 		return nipResultCreator.Fail(number, warnings, err.Error(), debugInfo)
 	}
@@ -51,7 +51,7 @@ func Validate(number string) *validation.Result {
 	}
 }
 
-func validate(number string) (bool, error) {
+func validateNIP(number string) (bool, error) {
 
 	sum := 0
 	splitNumber := strings.Split(number, "")
